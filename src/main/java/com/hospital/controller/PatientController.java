@@ -25,7 +25,7 @@ public class PatientController {
 
     // Отримання пацієнта за ID
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable String id) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         return patientService.getPatientById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -40,14 +40,14 @@ public class PatientController {
 
     // Оновлення даних пацієнта
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updatePatient(@PathVariable String id, @RequestBody Patient updatedPatient) {
+    public ResponseEntity<Void> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient) {
         patientService.updatePatient(id, updatedPatient);
         return ResponseEntity.noContent().build();
     }
 
     // Видалення пацієнта за ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable String id) {
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
     }
