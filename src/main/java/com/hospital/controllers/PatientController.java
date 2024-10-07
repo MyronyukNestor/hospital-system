@@ -1,7 +1,7 @@
-package com.hospital.controller;
+package com.hospital.controllers;
 
-import com.hospital.model.Patient;
-import com.hospital.service.PatientService;
+import com.hospital.models.Patient;
+import com.hospital.services.PatientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
