@@ -1,0 +1,24 @@
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" />
+    <div *ngIf="patientForm.get('name')?.invalid && (patientForm.get('name')?.touched || patientForm.get('name')?.dirty)">
+      Name is required.
+    </div>
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input id="age" type="number" formControlName="age" />
+    <div *ngIf="patientForm.get('age')?.invalid && (patientForm.get('age')?.touched || patientForm.get('age')?.dirty)">
+      Age must be a positive number.
+    </div>
+  </div>
+  <div>
+    <label for="diagnosis">Diagnosis:</label>
+    <input id="diagnosis" formControlName="diagnosis" />
+    <div *ngIf="patientForm.get('diagnosis')?.invalid && (patientForm.get('diagnosis')?.touched || patientForm.get('diagnosis')?.dirty)">
+      Diagnosis is required.
+    </div>
+  </div>
+  <button type="submit" [disabled]="patientForm.invalid">Submit</button>
+</form>
