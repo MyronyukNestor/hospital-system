@@ -1,5 +1,7 @@
 <ul>
   <li *ngFor="let patient of patients">
     {{ patient.name }} — {{ patient.id }}
+    <button (click)="editPatient(patient.id)">Edit</button>
+    <button (click)="deletePatient(patient.id)">Delete</button>
   </li>
 </ul>

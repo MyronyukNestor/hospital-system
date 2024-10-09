@@ -1,40 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PatientService } from '../patient.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-patient-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './patient-form.component.html',
-  styleUrl: './patient-form.component.css'
+  styleUrls: ['./patient-form.component.css']
 })
 export class PatientFormComponent implements OnInit {
   patientForm: FormGroup;
   isEditMode: boolean = false;
   patientId: number | null = null;
+  submittedPatient: any = null;
 
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.patientForm = this.fb.group({
       name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(0)]],
-      diagnosis: ['', Validators.required],
+      disease: ['', Validators.required],
+      doctor: ['', Validators.required],
+      appointments: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    if (this.patientId) {
-      this.patientService.getPatientById(this.patientId).subscribe(patient => {
-        this.patientForm.patchValue(patient);
-      });
-    }
+    this.route.params.subscribe(params => {
+      this.patientId = +params['id'];
+      this.isEditMode = !!this.patientId;
+      if (this.isEditMode) {
+        this.patientService.getPatientById(this.patientId).subscribe(patient => {
+          this.patientForm.patchValue(patient);
+        });
+      }
+    });
   }
 
   onSubmit() {
@@ -43,7 +52,8 @@ export class PatientFormComponent implements OnInit {
         this.router.navigate(['/patients']);
       });
     } else {
-      this.patientService.addPatient(this.patientForm.value).subscribe(() => {
+      this.patientService.addPatient(this.patientForm.value).subscribe((newPatient) => {
+        this.submittedPatient = newPatient;
         this.router.navigate(['/patients']);
       });
     }

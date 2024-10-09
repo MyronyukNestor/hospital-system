@@ -6,19 +6,39 @@
       Name is required.
     </div>
   </div>
+
   <div>
-    <label for="age">Age:</label>
-    <input id="age" type="number" formControlName="age" />
-    <div *ngIf="patientForm.get('age')?.invalid && (patientForm.get('age')?.touched || patientForm.get('age')?.dirty)">
-      Age must be a positive number.
+    <label for="disease">Disease:</label>
+    <input id="disease" formControlName="disease" />
+    <div *ngIf="patientForm.get('disease')?.invalid && (patientForm.get('disease')?.touched || patientForm.get('disease')?.dirty)">
+      Disease is required.
     </div>
   </div>
+
   <div>
-    <label for="diagnosis">Diagnosis:</label>
-    <input id="diagnosis" formControlName="diagnosis" />
-    <div *ngIf="patientForm.get('diagnosis')?.invalid && (patientForm.get('diagnosis')?.touched || patientForm.get('diagnosis')?.dirty)">
-      Diagnosis is required.
+    <label for="doctor">Doctor:</label>
+    <input id="doctor" formControlName="doctor" />
+    <div *ngIf="patientForm.get('doctor')?.invalid && (patientForm.get('doctor')?.touched || patientForm.get('doctor')?.dirty)">
+      Doctor is required.
     </div>
   </div>
+
+  <div>
+    <label for="appointments">Appointments:</label>
+    <input id="appointments" formControlName="appointments" />
+    <div *ngIf="patientForm.get('appointments')?.invalid && (patientForm.get('appointments')?.touched || patientForm.get('appointments')?.dirty)">
+      Appointments are required.
+    </div>
+  </div>
+
   <button type="submit" [disabled]="patientForm.invalid">Submit</button>
 </form>
+
+<!-- Відображення доданого пацієнта -->
+<div *ngIf="submittedPatient">
+  <h2>Patient Information</h2>
+  <p><strong>Name:</strong> {{ submittedPatient.name }}</p>
+  <p><strong>Disease:</strong> {{ submittedPatient.disease }}</p>
+  <p><strong>Doctor:</strong> {{ submittedPatient.doctor }}</p>
+  <p><strong>Appointments:</strong> {{ submittedPatient.appointments }}</p>
+</div>
